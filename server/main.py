@@ -2,6 +2,8 @@ import os
 
 from fastapi import FastAPI
 
+from server.utils import get_all_programs
+
 
 app = FastAPI()
 
@@ -12,8 +14,8 @@ async def root():
 
 
 @app.get("/pr")
-async def programs():
-    programs = [file.replace(".py", "") for file in os.listdir("./leds/") if file.endswith(".py")]
+async def get_programs():
+    programs = get_all_programs()
     return {"programs": programs}
 
 
