@@ -1,0 +1,11 @@
+[theme]
+
+backgroundColor = '#EDEDED'
+secondaryBackgroundColor = '#E3E3E3'
+primaryColor = '#009EAC'
+textColor = '#009EAC'
+
+
+[server]
+port = 8080
+address = "0.0.0.0"
