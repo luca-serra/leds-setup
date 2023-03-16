@@ -13,7 +13,7 @@ async def root():
     return {"message": "Welcome"}
 
 
-@app.get("/pr")
+@app.get("/programs")
 async def get_programs():
     programs = get_all_programs()
     return {"programs": programs}

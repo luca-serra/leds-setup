@@ -1,5 +1,9 @@
 import streamlit as st
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 st.markdown(
@@ -7,7 +11,11 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-program_names = requests.get("http://192.168.1.21:8000/pr").json().get("programs")
+program_names = (
+    requests.get(f"{os.environ.get('HOST')}:{os.environ.get('SERVER_PORT')}/programs")
+    .json()
+    .get("programs")
+)
 
 for program_name in program_names:
     st.button(program_name)
