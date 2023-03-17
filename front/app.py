@@ -1,7 +1,8 @@
 import streamlit as st
-import requests
-import os
 from dotenv import load_dotenv
+from front.program_card import build_program_card
+
+from front.utils import get_server_programs
 
 load_dotenv()
 
@@ -11,11 +12,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-program_names = (
-    requests.get(f"{os.environ.get('HOST')}:{os.environ.get('SERVER_PORT')}/programs")
-    .json()
-    .get("programs")
-)
+program_names = get_server_programs()
 
 for program_name in program_names:
-    st.button(program_name)
+    build_program_card(program_name)
