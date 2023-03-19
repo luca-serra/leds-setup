@@ -8,7 +8,41 @@ load_dotenv()
 
 
 st.markdown(
-    """<p align="center" style="color:#FF6F17;background-color:#FAD7A0">Coucou joli chat ! :).</p>""",
+    """<p align="center" style="color:black;background:linear-gradient(to bottom, #FCD8F9 0%, #FFFFFF 100%);">Coucou joli chat ! :)
+    <br> Voici la liste des programmes disponibles sur le serveur :
+    </p>""",
+    unsafe_allow_html=True,
+)
+st.markdown(
+    """
+        <style>
+        div.stButton > button:first-child {
+        color: #009EAC;
+        backgroud-color: ##E0E0E0;
+        border: 1px solid #D0D0D0";
+        height: 30px;
+        width: 90%;
+        margin:auto;
+        display: block;
+        }
+        </style>
+        """,
+    unsafe_allow_html=True,
+)
+st.markdown(
+    """
+        <style>
+        .css-gf00eh {
+            background: linear-gradient(to bottom, #FCD8F9 0%, #FFFFFF 100%);
+        }
+        .css-d07ibl {
+            visibility: hidden;
+        }
+        .css-hfyt54 {
+            visibility: hidden;
+        }
+        </style>
+        """,
     unsafe_allow_html=True,
 )
 
