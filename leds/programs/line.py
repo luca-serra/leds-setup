@@ -25,18 +25,24 @@ color_indices = list(range(len(colors)))
 class Line:
     def __init__(self):
         self.color_idx = 0
+        self.previous_color_idx = 0
         self.len = get_random_number_from_range(5, 10)
 
     def update(self, idx: int):
         if idx % num_pixels == 0:
             color_idx = get_random_element_from_list(color_indices, self.color_idx)
+            self.previous_color_idx = self.color_idx
             self.color_idx = color_idx
 
     def light(self, idx: int):
         pixels.fill(BLACK)
         pixels.show()
         for i in range(self.len):
-            pixels[(idx - i) % num_pixels] = colors[self.color_idx]
+            simplified_idx = (idx - i) % num_pixels
+            if (simplified_idx > num_pixels - self.len) and (idx % num_pixels) < self.len:
+                pixels[simplified_idx] = colors[self.previous_color_idx]
+            else:
+                pixels[simplified_idx] = colors[self.color_idx]
         pixels.show()
 
 
