@@ -1,9 +1,8 @@
 import os
-
 from fastapi import FastAPI
 
 from server.utils import get_all_programs
-
+from loguru import logger
 
 app = FastAPI()
 
@@ -21,7 +20,8 @@ async def get_programs():
 
 @app.get("/programs/{program_name}")
 async def run_program(program_name: str):
-    # TODO: run this in a separate thread?
-    os.system(f"sudo python3 leds/{program_name}.py")
-
+    logger.info("Kill python scripts running...")
+    os.system("sudo kill -9 $(pgrep -f 'python3 leds/')")
+    logger.info(f"Starting program: {program_name}")
+    os.system(f"sudo python3 leds/programs/{program_name}.py &")
     return {"Program started": program_name}
