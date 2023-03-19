@@ -8,16 +8,15 @@ from leds.utils import (
     get_random_element_from_list,
     get_random_number_from_range,
 )
+from leds.config.positions import NUM_PIXELS
 
 
 pixel_pin = board.D18
 
-num_pixels = 223
-
 ORDER = neopixel.GRB
 
 pixels = neopixel.NeoPixel(
-    pixel_pin, num_pixels, brightness=0.2, auto_write=False, pixel_order=ORDER
+    pixel_pin, NUM_PIXELS, brightness=0.2, auto_write=False, pixel_order=ORDER
 )
 
 colors = {
@@ -33,7 +32,7 @@ class Line:
         self.len = get_random_number_from_range(10, 15)
 
     def update(self, idx: int):
-        if idx % num_pixels == 0:
+        if idx % NUM_PIXELS == 0:
             color_idx = get_random_element_from_list(color_indices, self.color_idx)
             self.previous_color_idx = self.color_idx
             self.color_idx = color_idx
@@ -42,8 +41,8 @@ class Line:
         pixels.fill(BLACK)
         pixels.show()
         for i in range(self.len):
-            simplified_idx = (idx - i) % num_pixels
-            if (simplified_idx > num_pixels - self.len) and (idx % num_pixels) < self.len:
+            simplified_idx = (idx - i) % NUM_PIXELS
+            if (simplified_idx > NUM_PIXELS - self.len) and (idx % NUM_PIXELS) < self.len:
                 color = colors[self.previous_color_idx]
             else:
                 color = colors[self.color_idx]
