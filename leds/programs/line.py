@@ -3,7 +3,7 @@ import board
 import neopixel
 from leds.config.colors import BLACK, RED, GREEN, BLUE, WHITE, PURPLE, PINK, ORANGE, CYAN, MAGENTA
 from leds.config.positions import WALL, SHELF, EDGE, TOP
-from leds.utils import fill_list, get_random_element_from_list
+from leds.utils import fill_list, get_random_element_from_list, get_random_number_from_range
 
 
 pixel_pin = board.D18
@@ -25,6 +25,7 @@ color_indices = list(range(len(colors)))
 class Line:
     def __init__(self):
         self.color_idx = 0
+        self.len = get_random_number_from_range(5, 10)
 
     def update(self, idx: int):
         if idx % num_pixels == 0:
@@ -34,7 +35,8 @@ class Line:
     def light(self, idx: int):
         pixels.fill(BLACK)
         pixels.show()
-        pixels[idx % num_pixels] = colors[self.color_idx]
+        for i in range(self.len):
+            pixels[(idx - i) % num_pixels] = colors[self.color_idx]
         pixels.show()
 
 

@@ -13,3 +13,7 @@ def get_random_element_from_list(list: List[int], previous_element) -> int:
     if element != previous_element:
         return element
     return get_random_element_from_list(list, previous_element)
+
+
+def get_random_number_from_range(start: int, end: int) -> int:
+    return random.randint(start, end)
