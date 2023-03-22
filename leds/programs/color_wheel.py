@@ -1,3 +1,8 @@
+"""
+en:Color wheel program for NeoPixels on Raspberry Pi
+fr: Changement de couleur de manière cyclique avec propagation de l'effet sur les leds
+"""
+
 import time
 import board
 import neopixel
