@@ -8,7 +8,7 @@ load_dotenv()
 
 
 st.markdown(
-    """<p align="center" style="color:black;background:linear-gradient(to bottom, #FCD8F9 0%, #FFFFFF 100%);">Coucou joli chat ! :)
+    """<p align="center" style="color:black;background:linear-gradient(to bottom, #FCD8F9 0%, #FFFFFF 100%);">Bienvenue chez ChaFrench et ABP !
     <br> Voici la liste des programmes disponibles sur le serveur :
     </p>""",
     unsafe_allow_html=True,
