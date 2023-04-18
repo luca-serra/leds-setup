@@ -9,6 +9,7 @@ from leds.utils import (
     get_random_number_from_range,
 )
 from leds.config.positions import NUM_PIXELS
+from typing import Tuple
 
 
 pixel_pin = board.D18
@@ -26,23 +27,30 @@ color_indices = list(range(len(colors)))
 
 
 class Line:
-    def __init__(self):
-        self.color = colors[0]
-        self.len = get_random_number_from_range(40, 50)
+    def __init__(self, initial_sum: int = 0):
+        self.color = colors[get_random_element_from_list(color_indices, 0)]
+        self.len = get_random_number_from_range(10, 15)
         self.direction = 0
-        self.idx = self.len - 1
+        self.idx = self.len - 1 + initial_sum
+        self.next_idx = self.idx + 1
+        self.next_direction = self.direction
 
     def update(self):
-        if self.direction == 0:  # trigo
-            self.idx += 1
-            if self.idx == NUM_PIXELS - 1:
-                self.direction = 1
-                self.idx = NUM_PIXELS - self.len
-        else:  # anti-trigo
-            self.idx -= 1
-            if self.idx == 0:
-                self.direction = 0
-                self.idx = self.len - 1
+        def _get_next_idx_direction(idx: int, direction: int) -> Tuple[int, int]:
+            if direction == 0:  # trigo
+                idx += 1
+                if idx == NUM_PIXELS - 1:
+                    direction = 1
+                    idx = NUM_PIXELS - self.len
+            else:  # anti-trigo
+                idx -= 1
+                if idx == 0:
+                    direction = 0
+                    idx = self.len - 1
+            return idx, direction
+
+        self.idx, self.direction = _get_next_idx_direction(self.idx, self.direction)
+        self.next_idx, self.next_direction = _get_next_idx_direction(self.idx, self.direction)
 
     def light(self):
         pixels.fill(BLACK)
@@ -57,8 +65,22 @@ class Line:
 
 
 if __name__ == "__main__":
-    line = Line()
+    lines = []
+    line1 = Line(initial_sum=0)
+    line2 = Line(initial_sum=100)
+    lines = [line1, line2]
     while True:
-        line.light()
-        line.update()
         # time.sleep(0.01)
+        trigos = [line for line in lines if line.direction == 0]
+        anti_trigos = [line for line in lines if line.direction == 1]
+        for trigo in trigos:
+            for anti_trigo in anti_trigos:
+                if abs(trigo.next_idx - anti_trigo.next_idx) <= 1:
+                    trigo.idx = trigo.idx - (trigo.len - 1)
+                    trigo.direction = 1
+                    anti_trigo.idx = anti_trigo.idx + (anti_trigo.len - 1)
+                    anti_trigo.direction = 0
+
+        for line in lines:
+            line.light()
+            line.update()
