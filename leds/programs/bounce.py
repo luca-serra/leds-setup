@@ -54,7 +54,6 @@ class Line:
 
     def light(self):
         pixels.fill(BLACK)
-        pixels.show()
         for i in range(self.len):
             if self.direction == 1:
                 simplified_idx = (self.idx + i) % NUM_PIXELS
@@ -66,11 +65,10 @@ class Line:
 
 if __name__ == "__main__":
     lines = []
-    line1 = Line(initial_sum=0)
-    line2 = Line(initial_sum=100)
-    lines = [line1, line2]
+    n_lines = get_random_number_from_range(2, 2)
+    for i in range(n_lines):
+        lines.append(Line(initial_sum=i * NUM_PIXELS // n_lines))
     while True:
-        # time.sleep(0.01)
         trigos = [line for line in lines if line.direction == 0]
         anti_trigos = [line for line in lines if line.direction == 1]
         for trigo in trigos:
